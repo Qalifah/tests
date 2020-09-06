@@ -18,6 +18,13 @@ type Player struct {
 	Wins	int
 }
 
+// Collection provides access to a collection of player's scores
+type Collection interface {
+	GetPlayerScore(name string) int
+	RecordWin(name string)
+	GetLeague() League
+}
+
 // NewServer initialises a new server
 func NewServer(store Collection) *Server {
 	s := new(Server)
@@ -65,10 +72,4 @@ func(s *Server) processWin(w http.ResponseWriter, player string) {
 	w.WriteHeader(http.StatusAccepted)
 }
 
-// Collection provides access to a collection of player's scores
-type Collection interface {
-	GetPlayerScore(name string) int
-	RecordWin(name string)
-	GetLeague() League
-}
 

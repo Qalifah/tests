@@ -26,4 +26,5 @@ func TestCLI(t *testing.T) {
 
 		poker.AssertPlayerWin(t, playerStore, "Cleo")
 	})
+
 }

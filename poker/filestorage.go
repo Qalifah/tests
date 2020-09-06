@@ -58,23 +58,6 @@ func (f *FileSystemPlayerStore) GetLeague() League {
     return f.League
 }
 
-func initialisePlayerDBFile(file *os.File) error {
-    file.Seek(0, 0)
-
-    info, err := file.Stat()
-
-    if err != nil {
-        return fmt.Errorf("problem getting file info from file %s, %v", file.Name(), err)
-    }
-
-    if info.Size()==0 {
-        file.Write([]byte("[]"))
-        file.Seek(0, 0)
-    }
-
-    return nil
-}
-
 func FileSystemPlayerStoreFromFile(path string) (*FileSystemPlayerStore, func(), error) {
     db, err := os.OpenFile(path, os.O_RDWR|os.O_CREATE, 0666)
 
@@ -93,4 +76,21 @@ func FileSystemPlayerStoreFromFile(path string) (*FileSystemPlayerStore, func(),
     }
 
     return store, closeFunc, nil
+}
+
+func initialisePlayerDBFile(file *os.File) error {
+    file.Seek(0, 0)
+
+    info, err := file.Stat()
+
+    if err != nil {
+        return fmt.Errorf("problem getting file info from file %s, %v", file.Name(), err)
+    }
+
+    if info.Size()==0 {
+        file.Write([]byte("[]"))
+        file.Seek(0, 0)
+    }
+
+    return nil
 }
